@@ -1,0 +1,31 @@
+- name: Configurer et déployer Apache sur les noeuds cibles
+  hosts: nodes
+  become: true
+
+  tasks:
+    - name: Installer le paquet 'apache2'
+      ansible.builtin.package:
+        name: apache2
+        state: present
+
+    - name: Activer et démarrer le service Apache
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Copier le fichier de configuration Apache personnalisé
+      ansible.builtin.copy:
+        src: files/apache.conf
+        dest: /etc/apache2/sites-available/000-default.conf
+
+    - name: Créer un répertoire pour l'application web
+      ansible.builtin.file:
+        path: /var/www/html/app
+        state: directory
+        mode: '0755'
+
+    - name: Copier le fichier HTML simple
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /var/www/html/app/index.html

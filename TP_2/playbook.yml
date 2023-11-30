@@ -1,0 +1,7 @@
+- name: Configurer et déployer Apache sur les noeuds cibles
+  hosts: nodes
+  become: true
+
+  roles:
+    - common
+    - webserver

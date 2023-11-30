@@ -1,0 +1,21 @@
+---
+# tasks file for roles/common
+- name: Installer les paquets communs
+  ansible.builtin.package:
+    name:
+      - apache2
+      - apache2-utils
+    state: present
+  
+- name: Installer la bibliothèque passlib pour Python
+  ansible.builtin.package:
+    name: python3-passlib
+    state: present
+
+
+- name: Créer les utilisateurs
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    groups: "{{ item.groups }}"
+  with_items: "{{ common_users }}"

@@ -1,0 +1,13 @@
+- name: Configurer et déployer Apache sur les noeuds cibles
+  hosts: nodes
+  become: yes
+
+  vars_files:
+    - vault.yml
+  
+  vars:
+    common_users: "{{ vault_common_users }}"
+
+  roles:
+    - common
+    - webserver

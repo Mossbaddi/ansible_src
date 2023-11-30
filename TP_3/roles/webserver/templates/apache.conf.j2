@@ -1,0 +1,22 @@
+Listen {{apache_port }}
+
+
+<VirtualHost *:{{ apache_port }}>
+    ServerAdmin webmaster@localhost
+
+    DocumentRoot /var/www/html/app
+
+    <Directory /var/www/html/app>
+        Options FollowSymLinks
+        AllowOverride None
+        Require all granted
+
+        AuthType Basic
+        AuthName "Restricted Content"
+        AuthUserFile /etc/apache2/.htpasswd
+        Require valid-user
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
